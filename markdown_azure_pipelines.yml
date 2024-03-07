@@ -17,13 +17,13 @@ jobs:
       displayName: 'crossnote install'
 
     - script: |
-        apt install -y libtool graphviz
+        sudo apt install -y libtool graphviz
       displayName: 'graphviz install'
 
     - script: |
         cd $(buildProgramFilePath)
         node $(buildProgramFileName) $(targetMarkdownRelativePath).md
-      # cp $(targetMarkdownRelativePath).html $(Build.ArtifactStagingDirectory)/
+        cp $(targetMarkdownRelativePath).html $(Build.ArtifactStagingDirectory)/
       displayName: 'markdown document build'
 
     - task: publishBuildArtifacts@1

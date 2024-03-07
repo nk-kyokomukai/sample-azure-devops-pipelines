@@ -1,0 +1,32 @@
+trigger:
+- main
+
+variables:
+  buildProgramFilePath: 'sample_markdown/build_program'
+  buildProgramFileName: 'md-to-html.js'
+  targetMarkdownRelativePath: '../sample'
+
+- job: HtmlBuild
+  pool:
+    vmImage: 'macOS-13'
+  steps:
+    - script: |
+        cd $(buildProgramFilePath)
+        yarn add crossnote
+      displayName: crossnote install'
+
+    - script: |
+        brew install libtool
+        brew link libtool
+        brew install graphviz
+        brew link --overwrite graphviz
+      displayName: 'graphviz install'
+
+    - script: |
+        cd $(crossnotePath)
+        node $(buildProgramFileName) $(targetMarkdownRelativePath).md
+        cp $(targetMarkdownRelativePath).html $(Build.ArtifactStagingDirectory)/
+      displayName: 'markdown document build'
+
+    - task: publishBuildArtifacts@1
+      displayName: 'Publish Artifact: crossnote'

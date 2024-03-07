@@ -1,0 +1,23 @@
+# docker-composeのバージョン
+version: "3"
+
+# コンテナ情報を記述
+services:
+# サービスを定義
+  pipelines-sample-image:
+    image: pipelines-sample-image
+#コンテナ名
+    container_name: pipelines-sample-sample-container
+#ポートを指定
+    ports:
+      - 5678:5678
+#環境変数を設定
+    environment: 
+      LANG: ja_JP.UTF-8
+      TZ: Asia/Tokyo
+#コンテナを起動させ続けるか
+    tty: true
+#標準入出力エラーとエラー出力をコンテナに結び付けるか
+    stdin_open: true
+#通常のコンテナではアクセスできない、ホストコンピュータへのアクセスを可能にするか
+    privileged: true

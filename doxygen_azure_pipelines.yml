@@ -1,0 +1,32 @@
+trigger:
+- main
+
+variables:
+  doxyfileDir: 'sample_doxygen'
+  indexFileName: 'doxygen_view.html'
+
+jobs:
+- job: DoxygenBuild
+  pool:
+    vmImage: 'Ubuntu-latest'
+  steps:
+    - script: sudo apt install -y doxygen
+      displayName: InstallDoxygen
+
+    - script: |
+        cd $(doxyfileDir)
+        doxygen Doxyfile
+      displayName: RunDoxygen
+
+    - script: |
+      cd $(doxyfileDir)
+      cp -r latex $(Build.ArtifactStagingDirectory)
+      cp -r html $(Build.ArtifactStagingDirectory)
+      cp $(indexFileName) $(Build.ArtifactStagingDirectory)
+
+      displayName: CopyForPublish
+
+    - task: PublishBuildArtifacts@1
+      displayName: Publish ArtifactStagingDirectory
+      inputs:
+        pathtoPublish: $(Build.ArtifactStagingDirectory)

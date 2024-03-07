@@ -1,0 +1,32 @@
+trigger:
+- main
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  imageName: 'pipelines-sample-image'
+  fileName: 'azure_pipelines_sample_image.tar'
+  folderName: 'sample_docker' 
+  tag: 'latest'
+
+steps:
+- task: Docker@2
+  displayName: Build an image
+  inputs:
+    repository: $(folderName)/$(imageName)
+    command: build
+    Dockerfile: Dockerfile
+    tags: $(tag)
+
+- script: |
+    mkdir $(Build.ArtifactStagingDirectory)/$(folderName)
+    cp $(folderName)/docker-compose.yml $(Build.ArtifactStagingDirectory)/$(folderName)/
+    cp $(folderName)/create_container.sh $(Build.ArtifactStagingDirectory)/$(folderName)/
+    cd $(Build.ArtifactStagingDirectory)/$(folderName)/
+    docker save $(imageName) -o $(fileName)
+    gzip $(fileName)
+  displayName: 'copy exec files'
+
+- task: publishBuildArtifacts@1
+  displayName: 'Publish Artifact'

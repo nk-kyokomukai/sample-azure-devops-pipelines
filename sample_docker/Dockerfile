@@ -23,9 +23,9 @@ RUN apt update && apt install -y \
 #Pythonのビルド
 RUN mkdir temp && \
     cd temp && \
-    wget https://www.python.org/ftp/python/3.11.11/Python-3.11.11.tar.xz && \
-    tar xJf Python-3.11.11.tar.xz && \
-    cd Python-3.11.11 && \
+    wget https://www.python.org/ftp/python/3.11.11/Python-3.11.8.tar.xz && \
+    tar xJf Python-3.11.8.tar.xz && \
+    cd Python-3.11.8 && \
     ./configure && \
     make && \
     make install &&\

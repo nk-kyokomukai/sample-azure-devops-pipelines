@@ -7,7 +7,7 @@ services:
   pipelines-sample-image:
     image: pipelines-sample-image
 #コンテナ名
-    container_name: pipelines-sample-sample-container
+    container_name: pipelines-sample-container
 #ポートを指定
     ports:
       - 5678:5678

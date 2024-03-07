@@ -13,6 +13,7 @@ async function main() {
       printBackground: true,
       enableScriptExecution: true, // <= For running code chunks.
       enableExtendedTableSyntax: true,
+      plantumlJarPath: 'plantuml.jar'
     },
   });
   const engine = notebook.getNoteMarkdownEngine(process.argv[2]);

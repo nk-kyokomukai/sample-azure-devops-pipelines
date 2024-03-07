@@ -9,7 +9,7 @@ variables:
 jobs:
 - job: HtmlBuild
   pool:
-    vmImage: 'macOS-13'
+    vmImage: 'ubuntu-latest'
   steps:
     - script: |
         cd $(buildProgramFilePath)
@@ -17,16 +17,12 @@ jobs:
       displayName: 'crossnote install'
 
     - script: |
-        brew install libtool
-        brew link libtool
-        brew install graphviz
-        brew link --overwrite graphviz
+        apt install -y libtool graphviz
       displayName: 'graphviz install'
 
     - script: |
         cd $(buildProgramFilePath)
         node $(buildProgramFileName) $(targetMarkdownRelativePath).md
-        ls ..
       # cp $(targetMarkdownRelativePath).html $(Build.ArtifactStagingDirectory)/
       displayName: 'markdown document build'
 

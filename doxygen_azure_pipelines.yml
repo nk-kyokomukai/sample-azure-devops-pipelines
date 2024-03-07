@@ -19,10 +19,10 @@ jobs:
       displayName: RunDoxygen
 
     - script: |
-      cd $(doxyfileDir)
-      cp -r latex $(Build.ArtifactStagingDirectory)
-      cp -r html $(Build.ArtifactStagingDirectory)
-      cp $(indexFileName) $(Build.ArtifactStagingDirectory)
+        cd $(doxyfileDir)
+        cp -r latex $(Build.ArtifactStagingDirectory)
+        cp -r html $(Build.ArtifactStagingDirectory)
+        cp $(indexFileName) $(Build.ArtifactStagingDirectory)
 
       displayName: CopyForPublish
 

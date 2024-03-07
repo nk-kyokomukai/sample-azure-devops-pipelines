@@ -16,7 +16,7 @@ steps:
   inputs:
     repository: $(imageName)
     command: build
-    Dockerfile:$(folderName)/Dockerfile
+    Dockerfile: $(folderName)/Dockerfile
     tags: $(tag)
 
 - script: |

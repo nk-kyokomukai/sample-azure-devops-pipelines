@@ -6,6 +6,7 @@ variables:
   buildProgramFileName: 'md-to-html.js'
   targetMarkdownRelativePath: '../sample'
 
+jobs:
 - job: HtmlBuild
   pool:
     vmImage: 'macOS-13'

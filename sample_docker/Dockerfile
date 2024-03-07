@@ -18,7 +18,8 @@ RUN apt update && apt install -y \
     libsqlite3-dev \
     libssl-dev \
     zlib1g-dev uuid-dev \
-    tk-dev
+    tk-dev && \
+    rm -rf /var/lib/apt-get/lists/*
 
 #Pythonのビルド
 RUN mkdir temp && \
@@ -34,9 +35,7 @@ RUN mkdir temp && \
 
 #Pythonモジュールのインストール
 COPY requirements.txt sample_streamlit.py ./
-RUN python3 -m pip install --upgrade pip && \
-    pip install -r requirements.txt && \
-    rm -rf /var/lib/apt-get/lists/*
+RUN pip install -r requirements.txt
 
 ENTRYPOINT ["streamlit"]
 CMD ["run", "sample_streamlit.py", "--server.port", "5678"]

@@ -5,7 +5,7 @@
 
 
 def sample_func(arg_int):
-    """ サンプル関数
+    """! サンプル関数
     @param arg_int(int): 引数
     @return none
     @note 使い方例

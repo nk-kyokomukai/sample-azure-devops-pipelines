@@ -14,9 +14,9 @@ steps:
 - task: Docker@2
   displayName: Build an image
   inputs:
-    repository: $(folderName)/$(imageName)
+    repository: $(imageName)
     command: build
-    Dockerfile: Dockerfile
+    Dockerfile:$(folderName)/Dockerfile
     tags: $(tag)
 
 - script: |

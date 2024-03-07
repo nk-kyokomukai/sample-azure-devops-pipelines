@@ -33,7 +33,7 @@ RUN mkdir temp && \
     rm -rf temp
 
 #Pythonモジュールのインストール
-COPY requirements.txt sample_stramlit.py ./
+COPY requirements.txt sample_streamlit.py ./
 RUN python3 -m pip install --upgrade pip && \
     pip install -r requirements.txt && \
     rm -rf /var/lib/apt-get/lists/*

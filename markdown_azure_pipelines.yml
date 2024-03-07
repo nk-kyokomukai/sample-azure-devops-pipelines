@@ -24,7 +24,7 @@ jobs:
       displayName: 'graphviz install'
 
     - script: |
-        cd $(crossnotePath)
+        cd $(buildProgramFilePath)
         node $(buildProgramFileName) $(targetMarkdownRelativePath).md
         cp $(targetMarkdownRelativePath).html $(Build.ArtifactStagingDirectory)/
       displayName: 'markdown document build'

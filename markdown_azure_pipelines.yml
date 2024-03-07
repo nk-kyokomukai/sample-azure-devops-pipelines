@@ -17,6 +17,7 @@ jobs:
       displayName: 'crossnote install'
 
     - script: |
+        sudo apt update
         sudo apt install -y libtool graphviz
       displayName: 'graphviz install'
 

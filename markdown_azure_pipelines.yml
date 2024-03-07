@@ -14,7 +14,7 @@ jobs:
     - script: |
         cd $(buildProgramFilePath)
         yarn add crossnote
-      displayName: crossnote install'
+      displayName: 'crossnote install'
 
     - script: |
         brew install libtool
@@ -27,7 +27,7 @@ jobs:
         cd $(buildProgramFilePath)
         node $(buildProgramFileName) $(targetMarkdownRelativePath).md
         ls ..
-        cp $(targetMarkdownRelativePath).html $(Build.ArtifactStagingDirectory)/
+      # cp $(targetMarkdownRelativePath).html $(Build.ArtifactStagingDirectory)/
       displayName: 'markdown document build'
 
     - task: publishBuildArtifacts@1

@@ -24,6 +24,7 @@ jobs:
       displayName: 'graphviz install'
 
     - script: |
+        brew install icu4c
         cd $(buildProgramFilePath)
         node $(buildProgramFileName) $(targetMarkdownRelativePath).md
         ls ..

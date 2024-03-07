@@ -29,7 +29,7 @@ RUN mkdir temp && \
     ./configure && \
     make && \
     make install &&\
-    cd ../ &&\
+    cd .. &&\
     rm -rf temp
 
 #Pythonモジュールのインストール

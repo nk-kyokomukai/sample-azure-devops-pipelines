@@ -2,7 +2,7 @@ trigger:
 - main
 
 variables:
-  doxyfileDir: 'sample_doxygen'
+  folderName: 'doxygen'
   indexFileName: 'doxygen_view.html'
 
 jobs:
@@ -14,12 +14,12 @@ jobs:
       displayName: InstallDoxygen
 
     - script: |
-        cd $(doxyfileDir)
+        cd $(folderName)
         doxygen Doxyfile
       displayName: RunDoxygen
 
     - script: |
-        cd $(doxyfileDir)
+        cd $(folderName)
         cp -r latex $(Build.ArtifactStagingDirectory)
         cp -r html $(Build.ArtifactStagingDirectory)
         cp $(indexFileName) $(Build.ArtifactStagingDirectory)

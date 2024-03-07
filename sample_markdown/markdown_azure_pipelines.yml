@@ -2,7 +2,7 @@ trigger:
 - main
 
 variables:
-  buildProgramFilePath: 'sample_markdown/build_program'
+  buildProgramFilePath: 'markdown/build_program'
   buildProgramFileName: 'md-to-html.js'
   targetMarkdownRelativePath: '../sample'
 

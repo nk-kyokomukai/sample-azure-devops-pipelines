@@ -5,9 +5,9 @@ pool:
   vmImage: 'ubuntu-latest'
 
 variables:
+  folderName: 'docker'
+  outputImageFileName: 'azure_pipelines_sample_image.tar' 
   imageName: 'pipelines-sample-image'
-  fileName: 'azure_pipelines_sample_image.tar'
-  folderName: 'sample_docker' 
   tag: 'latest'
 
 steps:
@@ -24,8 +24,8 @@ steps:
     cp $(folderName)/docker-compose.yml $(Build.ArtifactStagingDirectory)/$(folderName)/
     cp $(folderName)/create_container.sh $(Build.ArtifactStagingDirectory)/$(folderName)/
     cd $(Build.ArtifactStagingDirectory)/$(folderName)/
-    docker save $(imageName) -o $(fileName)
-    gzip $(fileName)
+    docker save $(imageName) -o $(outputImageFileName)
+    gzip $(outputImageFileName)
   displayName: 'copy exec files'
 
 - task: publishBuildArtifacts@1

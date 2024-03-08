@@ -38,4 +38,4 @@ COPY requirements.txt sample_streamlit.py ./
 RUN python3 -m pip install -r requirements.txt
 
 ENTRYPOINT ["streamlit"]
-CMD ["run", "sample_streamlit.py", "--server.port", "5678""--browser.gatherUsageStats", "false", "--server.headless", "true", "--server.fileWatcherType", "none"]
+CMD ["run", "sample_streamlit.py", "--server.port", "5678", "--browser.gatherUsageStats", "false", "--server.headless", "true", "--server.fileWatcherType", "none"]

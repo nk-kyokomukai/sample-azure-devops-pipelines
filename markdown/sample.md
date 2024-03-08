@@ -20,15 +20,6 @@ html:
     - [脚注](#脚注)
     - [脚注の内容](#脚注の内容)
   - [Markdown内にMarkdownを挿入](#markdown内にmarkdownを挿入)
-- [Markdown Preview Enhanced](#markdown-preview-enhanced)
-  - [Math typesetting](#math-typesetting)
-  - [Diagrams](#diagrams)
-  - [Code Chunk](#code-chunk)
-    - [GNUPlot](#gnuplot)
-    - [LaTeX](#latex)
-    - [Python matplotlib](#python-matplotlib)
-  - [Import external files](#import-external-files)
-  - [You can even create presentation!](#you-can-even-create-presentation)
 
 <!-- /code_chunk_output -->
 
@@ -121,9 +112,9 @@ puts 'The best way to log and share programmers knowledge.'
 
 * Github上のファイルも挿入できる
 
-[文書へのアクセスはこちら](https://github.com/shd101wyy/markdown-preview-enhanced/blob/master/test/demo.md)
+[Githubリンク](https://github.com/nk-kyokomukai/sample-azure-devops-pipelines/blob/main/README.md)
 
-@import "https://github.com/shd101wyy/markdown-preview-enhanced/blob/master/test/demo.md"
+@import "https://github.com/nk-kyokomukai/sample-azure-devops-pipelines/blob/main/README.md"
 
 ---
 <style>

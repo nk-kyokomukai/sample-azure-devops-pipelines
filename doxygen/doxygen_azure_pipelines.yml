@@ -1,32 +1,43 @@
-trigger:
-- main
+# doxygenのビルドを行う
 
 variables:
   folderName: 'doxygen'
   indexFileName: 'doxygen_view.html'
 
-jobs:
-- job: DoxygenBuild
-  pool:
-    vmImage: 'Ubuntu-latest'
-  steps:
-    - script: sudo apt install -y doxygen
-      displayName: InstallDoxygen
+trigger:
+- main
 
-    - script: |
-        cd $(folderName)
-        doxygen Doxyfile
-      displayName: RunDoxygen
+pool:
+  vmImage: 'Ubuntu-latest'
 
-    - script: |
-        cd $(folderName)
-        cp -r latex $(Build.ArtifactStagingDirectory)
-        cp -r html $(Build.ArtifactStagingDirectory)
-        cp $(indexFileName) $(Build.ArtifactStagingDirectory)
+steps:
 
-      displayName: CopyForPublish
+# doxygenのインストール
+- script: 'sudo apt install -y doxygen'
+  displayName: 'Install doxygen'
 
-    - task: PublishBuildArtifacts@1
-      displayName: Publish ArtifactStagingDirectory
-      inputs:
-        pathtoPublish: $(Build.ArtifactStagingDirectory)
+# doxygenのビルド
+- script: |
+    cd $(folderName)
+    doxygen Doxyfile
+  displayName: 'Run doxygen'
+
+# ビルドしたファイルを公開するフォルダにコピー  
+- task: CopyFiles@2
+  contents: '$(folderName)/latex/**'
+  targetFolder: '$(Build.ArtifactStagingDirectory)/latex'
+  displayName: 'Copy files 1'
+
+- task: CopyFiles@2
+  contents: '$(folderName)/html/**'
+  targetFolder: '$(Build.ArtifactStagingDirectory)/html'
+  displayName: 'Copy files 2'
+
+- task: CopyFiles@2
+  contents:  '$(folderName)/$(indexFileName)'
+  targetFolder: '$(Build.ArtifactStagingDirectory)'
+  displayName: 'Copy files 3'
+
+# ビルド成果物をアップロードする
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish artifact'

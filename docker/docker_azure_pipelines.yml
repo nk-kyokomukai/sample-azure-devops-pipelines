@@ -1,8 +1,4 @@
-trigger:
-- main
-
-pool:
-  vmImage: 'ubuntu-latest'
+# docker imageを作成する
 
 variables:
   folderName: 'docker'
@@ -10,23 +6,39 @@ variables:
   imageName: 'pipelines-sample-image'
   tag: 'latest'
 
+trigger:
+- main
+
+pool:
+  vmImage: 'ubuntu-latest'
+
 steps:
+# docker imageの読み込み
 - task: Docker@2
-  displayName: Build an image
+  displayName: 'Build an image'
   inputs:
-    repository: $(imageName)
-    command: build
-    Dockerfile: $(folderName)/Dockerfile
-    tags: $(tag)
+    repository: '$(imageName)'
+    command: 'build'
+    Dockerfile: '$(folderName)/Dockerfile'
+    tags: '$(tag)'
 
+# docker imageをファイルとして保存
 - script: |
-    mkdir $(Build.ArtifactStagingDirectory)/$(folderName)
-    cp $(folderName)/docker-compose.yml $(Build.ArtifactStagingDirectory)/$(folderName)/
-    cp $(folderName)/create_container.sh $(Build.ArtifactStagingDirectory)/$(folderName)/
-    cd $(Build.ArtifactStagingDirectory)/$(folderName)/
-    docker save $(imageName) -o $(outputImageFileName)
-    gzip $(outputImageFileName)
-  displayName: 'copy exec files'
+    'mkdir $(Build.ArtifactStagingDirectory)/$(folderName)'
+    'cd $(Build.ArtifactStagingDirectory)/$(folderName)/'
+    'docker save $(imageName) -o $(outputImageFileName)'
+    'gzip $(outputImageFileName)'
+  displayName: 'Build Docker Image'
 
+# 必要ファイルのコピー
+- task: CopyFiles@2
+  inputs:
+    Contents: |
+      '$(folderName)/docker-compose.yml'
+      '$(folderName)/create_container.sh'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)/$(folderName)'
+  displayName: 'Copy files'
+
+# ビルド成果物をアップロードする
 - task: publishBuildArtifacts@1
-  displayName: 'Publish Artifact'
+  displayName: 'Publish artifact'

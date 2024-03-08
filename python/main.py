@@ -1,4 +1,4 @@
-from animal import TwoCats
+from python.animal.animal import TwoCats
 
 
 def main():

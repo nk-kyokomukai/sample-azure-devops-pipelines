@@ -1,32 +1,37 @@
-trigger:
-- main
-
 variables:
   buildProgramFilePath: 'markdown/build_program'
   buildProgramFileName: 'md-to-html.js'
   targetMarkdownRelativePath: '../sample'
 
-jobs:
-- job: HtmlBuild
-  pool:
-    vmImage: 'ubuntu-latest'
-  steps:
-    - script: |
-        cd $(buildProgramFilePath)
-        yarn add crossnote
-      displayName: 'crossnote install'
+trigger:
+- main
 
-    - script: |
-        sudo apt update
-        sudo apt install -y libtool graphviz
-      displayName: 'graphviz install'
+pool:
+  vmImage: 'ubuntu-latest'
 
-    - script: |
-        brew install icu4c
-        cd $(buildProgramFilePath)
-        node $(buildProgramFileName) $(targetMarkdownRelativePath).md
-        cp $(targetMarkdownRelativePath).html $(Build.ArtifactStagingDirectory)/
-      displayName: 'markdown document build'
+steps:
 
-    - task: publishBuildArtifacts@1
-      displayName: 'Publish Artifact: crossnote'
+- script: |
+    'cd $(buildProgramFilePath)'
+    'yarn add crossnote'
+  displayName: 'crossnote install'
+
+- script: |
+    'sudo apt update'
+    'sudo apt install -y libtool graphviz'
+  displayName: 'Graphviz install'
+
+- script: |
+    'cd $(buildProgramFilePath)'
+    'node $(buildProgramFileName) $(targetMarkdownRelativePath).md'
+  displayName: 'Markdown document build'
+
+- task: CopyFiles@2
+  inputs:
+    Contents: '$(targetMarkdownRelativePath).html'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)/$(folderName)'
+  displayName: 'Copy files'
+
+# ビルド成果物をアップロードする
+- task: publishBuildArtifacts@1
+  displayName: 'Publish artifact'

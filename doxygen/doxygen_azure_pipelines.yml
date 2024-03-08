@@ -24,18 +24,21 @@ steps:
 
 # ビルドしたファイルを公開するフォルダにコピー
 - task: CopyFiles@2
-  contents: '$(folderName)/latex/**'
-  targetFolder: '$(Build.ArtifactStagingDirectory)/latex'
+  inputs:
+    contents: '$(folderName)/latex/**'
+    targetFolder: '$(Build.ArtifactStagingDirectory)/latex'
   displayName: 'Copy files 1'
 
 - task: CopyFiles@2
-  contents: '$(folderName)/html/**'
-  targetFolder: '$(Build.ArtifactStagingDirectory)/html'
+  inputs:
+    contents: '$(folderName)/html/**'
+    targetFolder: '$(Build.ArtifactStagingDirectory)/html'
   displayName: 'Copy files 2'
 
 - task: CopyFiles@2
-  contents:  '$(folderName)/$(indexFileName)'
-  targetFolder: '$(Build.ArtifactStagingDirectory)'
+  inputs:
+    contents:  '$(folderName)/$(indexFileName)'
+    targetFolder: '$(Build.ArtifactStagingDirectory)'
   displayName: 'Copy files 3'
 
 # ビルド成果物をアップロードする

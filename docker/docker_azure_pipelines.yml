@@ -32,10 +32,11 @@ steps:
 
 # 必要ファイルのコピー
 - task: CopyFiles@2
-  Contents: |
-    '$(folderName)/docker-compose.yml'
-    '$(folderName)/create_container.sh'
-  TargetFolder: '$(Build.ArtifactStagingDirectory)/$(folderName)'
+  inputs:
+    contents: |
+      $(folderName)/docker-compose.yml
+      $(folderName)/create_container.sh
+    targetFolder: '$(Build.ArtifactStagingDirectory)/$(folderName)'
   displayName: 'Copy files'
 
 # ビルド成果物をアップロードする

@@ -24,10 +24,10 @@ steps:
 
 # docker imageをファイルとして保存
 - script: |
-    'mkdir $(Build.ArtifactStagingDirectory)/$(folderName)'
-    'cd $(Build.ArtifactStagingDirectory)/$(folderName)/'
-    'docker save $(imageName) -o $(outputImageFileName)'
-    'gzip $(outputImageFileName)'
+    mkdir $(Build.ArtifactStagingDirectory)/$(folderName)
+    cd $(Build.ArtifactStagingDirectory)/$(folderName)/
+    docker save $(imageName) -o $(outputImageFileName)
+    gzip $(outputImageFileName)
   displayName: 'Build Docker Image'
 
 # 必要ファイルのコピー

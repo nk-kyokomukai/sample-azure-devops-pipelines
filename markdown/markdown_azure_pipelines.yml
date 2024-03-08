@@ -1,3 +1,5 @@
+# markdownの変換を行う
+
 variables:
   buildProgramFilePath: 'markdown/build_program'
   buildProgramFileName: 'md-to-html.js'
@@ -11,21 +13,25 @@ pool:
 
 steps:
 
+# crossnoteのインストール
 - script: |
     'cd $(buildProgramFilePath)'
     'yarn add crossnote'
   displayName: 'crossnote install'
 
+# graphvizのインストール
 - script: |
     'sudo apt update'
     'sudo apt install -y libtool graphviz'
   displayName: 'Graphviz install'
 
+# markdownの変換
 - script: |
     'cd $(buildProgramFilePath)'
     'node $(buildProgramFileName) $(targetMarkdownRelativePath).md'
   displayName: 'Markdown document build'
 
+# ビルドしたファイルを公開するフォルダにコピー
 - task: CopyFiles@2
   inputs:
     Contents: '$(targetMarkdownRelativePath).html'

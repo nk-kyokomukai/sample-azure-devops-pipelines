@@ -22,7 +22,7 @@ steps:
     doxygen Doxyfile
   displayName: 'Run doxygen'
 
-# ビルドしたファイルを公開するフォルダにコピー  
+# ビルドしたファイルを公開するフォルダにコピー
 - task: CopyFiles@2
   contents: '$(folderName)/latex/**'
   targetFolder: '$(Build.ArtifactStagingDirectory)/latex'

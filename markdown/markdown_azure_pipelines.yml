@@ -15,20 +15,20 @@ steps:
 
 # crossnoteのインストール
 - script: |
-    'cd $(buildProgramFilePath)'
-    'yarn add crossnote'
+    cd $(buildProgramFilePath)
+    yarn add crossnote
   displayName: 'crossnote install'
 
 # graphvizのインストール
 - script: |
-    'sudo apt update'
-    'sudo apt install -y libtool graphviz'
+    sudo apt update
+    sudo apt install -y libtool graphviz
   displayName: 'Graphviz install'
 
 # markdownの変換
 - script: |
-    'cd $(buildProgramFilePath)'
-    'node $(buildProgramFileName) $(targetMarkdownRelativePath).md'
+    cd $(buildProgramFilePath)
+    node $(buildProgramFileName) $(targetMarkdownRelativePath).md
   displayName: 'Markdown document build'
 
 # ビルドしたファイルを公開するフォルダにコピー

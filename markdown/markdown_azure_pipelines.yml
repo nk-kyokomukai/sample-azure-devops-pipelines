@@ -15,7 +15,6 @@ steps:
 
 # crossnoteのインストール
 - script: |
-    cd $(documentPath)
     yarn add crossnote
   displayName: 'crossnote install'
 
@@ -26,16 +25,14 @@ steps:
   displayName: 'Graphviz install'
 
 # markdownの変換
-- script: |
-    cd $(documentPath)
-    node $(buildProgramFilePath) $(Pipeline.Workspace)/$(targetMarkdownFileName).md
+- script: node $(documentPath)/$(buildProgramFilePath) $(Agent.WorkFolder)/$(documentPath)/$(targetMarkdownFileName).md
   displayName: 'Markdown document build'
 
 # ビルドしたファイルを公開するフォルダにコピー
 - task: CopyFiles@2
   inputs:
     Contents: '$(documentPath)/$(targetMarkdownFileName).html'
-    TargetFolder: '$(Build.ArtifactStagingDirectory)/$(documentPath)'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)'
   displayName: 'Copy files'
 
 # ビルド成果物をアップロードする

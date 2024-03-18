@@ -1,9 +1,9 @@
 # markdownの変換を行う
 
 variables:
-  buildProgramFilePath: 'markdown/build_program'
-  buildProgramFileName: 'md-to-html.js'
-  targetMarkdownRelativePath: '../sample'
+  documentPath: 'markdown'
+  buildProgramRelativeFilePath: 'build_program/md-to-html.js'
+  targetMarkdownFileName: 'sample'
 
 trigger:
 - main
@@ -27,17 +27,17 @@ steps:
 
 # markdownの変換
 - script: |
-    cd $(buildProgramFilePath)
-    node $(buildProgramFileName) $(targetMarkdownRelativePath).md
+    cd $(documentPath)
+    node $(buildProgramRelativeFilePath) $(targetMarkdownFileName).md
   displayName: 'Markdown document build'
 
-- script: ls $(buildProgramFilePath)/../
+- script: ls $(documentPath)
 
 # ビルドしたファイルを公開するフォルダにコピー
 - task: CopyFiles@2
   inputs:
-    Contents: '$(buildProgramFilePath)/$(targetMarkDownRelativePath).html'
-    TargetFolder: '$(Build.ArtifactStagingDirectory)/$(folderName)'
+    Contents: '$(documentPath)/$(targetMarkdownFileName).html'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)/$(documentPath)'
   displayName: 'Copy files'
 
 # ビルド成果物をアップロードする

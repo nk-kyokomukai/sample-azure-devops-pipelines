@@ -25,7 +25,7 @@ steps:
   displayName: 'Graphviz install'
 
 # markdownの変換
-- script: node $(documentPath)/$(buildProgramFilePath) $(Agent.HomeDirectory)/$(documentPath)/$(targetMarkdownFileName).md
+- script: node $(documentPath)/$(buildProgramFilePath)  $(System.DefaultWorkingDirectory)/$(documentPath)/$(targetMarkdownFileName).md
   displayName: 'Markdown document build'
 
 # ビルドしたファイルを公開するフォルダにコピー

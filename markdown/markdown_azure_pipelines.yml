@@ -2,8 +2,8 @@
 
 variables:
   documentPath: 'markdown'
-  buildProgramFilePath: 'markdown/build_program/md-to-html.js'
-  targetMarkdownFileName: 'markdown/sample'
+  buildProgramFilePath: 'build_program/md-to-html.js'
+  targetMarkdownFileName: 'sample'
 
 trigger:
 - main
@@ -15,7 +15,7 @@ steps:
 
 # crossnoteのインストール
 - script: |
-    cd $(buildProgramFilePath)
+    cd $(documentPath)
     yarn add crossnote
   displayName: 'crossnote install'
 
@@ -28,10 +28,8 @@ steps:
 # markdownの変換
 - script: |
     cd $(documentPath)
-    node $(Pipeline.Workspace)/$(buildProgramFilePath) $(Pipeline.Workspace)/$(targetMarkdownFileName).md
+    node $(buildProgramFilePath) $(Pipeline.Workspace)/$(targetMarkdownFileName).md
   displayName: 'Markdown document build'
-
-- script: ls $(documentPath)
 
 # ビルドしたファイルを公開するフォルダにコピー
 - task: CopyFiles@2

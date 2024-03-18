@@ -1,2 +1,37 @@
 trigger:
 - main
+
+jobs:
+- job: PyTestExec
+  pool:
+    vmImage: 'windows-latest'
+  steps:
+
+    - task: 'UsePythonVersion@0'
+      inputs:
+        versionSpec: '3.11'
+
+    - script: pip install -r pytest
+      displayName: pipInstall
+
+    - script: |
+        cd python
+        pytest -vv -s
+      displayName: py test
+
+- job: PythonLibraryBuild
+  dependsOn: PytestExec
+  condition: succeeded()
+
+  pool:
+    vmImage: ubuntu-latest
+
+  steps:
+    - task: 'UsePythonVersion@0'
+      inputs:
+        versionSpec: '3.11'
+
+    - script: |
+        cd python
+        python -m build --sdist --wheel
+      displayName: 'package build'

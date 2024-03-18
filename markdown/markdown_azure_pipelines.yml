@@ -1,9 +1,8 @@
 # markdownの変換を行う
 
 variables:
-  documentPath: 'markdown'
-  buildProgramFilePath: 'build_program/md-to-html.js'
-  targetMarkdownFileName: 'sample'
+  buildProgramFilePath: 'markdown/build_program/md-to-html.js'
+  targetMarkdownFilePath: 'markdown/sample'
 
 trigger:
 - main
@@ -25,13 +24,13 @@ steps:
   displayName: 'Graphviz install'
 
 # markdownの変換
-- script: node $(documentPath)/$(buildProgramFilePath)  $(System.DefaultWorkingDirectory)/$(documentPath)/$(targetMarkdownFileName).md
+- script: node $(buildProgramFilePath)  $(System.DefaultWorkingDirectory)/$(targetMarkdownFilePath).md
   displayName: 'Markdown document build'
 
 # ビルドしたファイルを公開するフォルダにコピー
 - task: CopyFiles@2
   inputs:
-    Contents: '$(documentPath)/$(targetMarkdownFileName).html'
+    Contents: '$(targetMarkdownFilePath).html'
     TargetFolder: '$(Build.ArtifactStagingDirectory)'
   displayName: 'Copy files'
 

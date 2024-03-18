@@ -2,8 +2,8 @@
 
 variables:
   documentPath: 'markdown'
-  buildProgramRelativeFilePath: 'build_program/md-to-html.js'
-  targetMarkdownFileName: 'sample'
+  buildProgramFilePath: 'markdown/build_program/md-to-html.js'
+  targetMarkdownFileName: 'markdown/sample'
 
 trigger:
 - main
@@ -28,7 +28,7 @@ steps:
 # markdownの変換
 - script: |
     cd $(documentPath)
-    node $(buildProgramRelativeFilePath) $(targetMarkdownFileName).md
+    node $(Pipeline.Workspace)/$(buildProgramFilePath) $(Pipeline.Workspace)/$(targetMarkdownFileName).md
   displayName: 'Markdown document build'
 
 - script: ls $(documentPath)

@@ -28,7 +28,7 @@ steps:
 # markdownの変換
 - script: |
     cd $(documentPath)
-    node $(buildProgramFilePath) $(Pipeline.Workspace)/$(targetMarkdownFileName).md
+    node $(buildProgramFilePath) $(targetMarkdownFileName).md
   displayName: 'Markdown document build'
 
 # ビルドしたファイルを公開するフォルダにコピー

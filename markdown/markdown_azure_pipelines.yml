@@ -34,7 +34,7 @@ steps:
 # ビルドしたファイルを公開するフォルダにコピー
 - task: CopyFiles@2
   inputs:
-    Contents: '$(targetMarkdownRelativePath).html'
+    Contents: '$(buildProgramFilePath)/$(targetMarkDownRelativePath).html'
     TargetFolder: '$(Build.ArtifactStagingDirectory)/$(folderName)'
   displayName: 'Copy files'
 

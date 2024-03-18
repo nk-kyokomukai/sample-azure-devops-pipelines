@@ -29,6 +29,7 @@ steps:
 - script: |
     cd $(buildProgramFilePath)
     node $(buildProgramFileName) $(targetMarkdownRelativePath).md
+    ls
   displayName: 'Markdown document build'
 
 # ビルドしたファイルを公開するフォルダにコピー

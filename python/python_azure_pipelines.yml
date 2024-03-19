@@ -1,14 +1,14 @@
 # pythonファイルのpytestとpyinstallerビルドを行う
 
 variables:
-  specFilePath: 'python\pyinstaller_build.spec'
+  specFilePath: 'python\pyinstaller.spec'
   buildExeName: 'sample.exe'
 
 trigger:
 - main
 
 jobs:
-- job: PyTestExec
+- job: PytestExec
   pool:
     vmImage: 'windows-latest'
   steps:
@@ -19,7 +19,7 @@ jobs:
         versionSpec: '3.11'
 
     # pytestのpip installを行う
-    - script: pip install -r pytest
+    - script: pip install pytest
       displayName: pipInstall
 
     # pytestを実施する
@@ -28,7 +28,7 @@ jobs:
         pytest -vv -s
       displayName: py test
 
-- job: PyInstallerBuildWindows
+- job: PyinstallerBuildWindows
   # PyTestExecジョブがsucceededで完了したときに実行される
   dependsOn: PyTestExec
   condition: succeeded()

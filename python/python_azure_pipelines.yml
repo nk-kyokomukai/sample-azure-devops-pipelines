@@ -1,3 +1,9 @@
+# pythonファイルのpytestとpyinstallerビルドを行う
+
+variables:
+  specFilePath: 'python\pyinstaller_build.spec'
+  buildExeName: 'sample.exe'
+
 trigger:
 - main
 
@@ -7,31 +13,46 @@ jobs:
     vmImage: 'windows-latest'
   steps:
 
+    # 用いるpythonのバージョンを指定
     - task: 'UsePythonVersion@0'
       inputs:
         versionSpec: '3.11'
 
+    # pytestのpip installを行う
     - script: pip install -r pytest
       displayName: pipInstall
 
+    # pytestを実施する
     - script: |
         cd python
         pytest -vv -s
       displayName: py test
 
-- job: PythonLibraryBuild
-  dependsOn: PytestExec
+- job: PyInstallerBuildWindows
+  # PyTestExecジョブがsucceededで完了したときに実行される
+  dependsOn: PyTestExec
   condition: succeeded()
-
   pool:
-    vmImage: ubuntu-latest
-
+    vmImage: 'Windows-latest'
   steps:
+
     - task: 'UsePythonVersion@0'
       inputs:
         versionSpec: '3.11'
 
+    # pyinstallerのpip installを行う
+    - script: pip install pyinstaller
+      displayName: pipInstall
+
+    # pyinstallerのビルドを行う
+    - script: pyinstaller $(specFilePath)
+      displayName: pyinstaller build
+
+    # 成果物をアップロード用フォルダにコピーする
     - script: |
-        cd python
-        python -m build --sdist --wheel
-      displayName: 'package build'
+        xcopy "dist\(buildExeName)" "$(Build.ArtifactStagingDirectory)"
+      displayName: CopyTargetFolder
+
+    # ビルド成果物をアップロードする
+    - task: publishBuildArtifacts@1
+      displayName: 'Publish artifact'

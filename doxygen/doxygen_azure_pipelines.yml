@@ -26,13 +26,13 @@ steps:
 - task: CopyFiles@2
   inputs:
     contents: '$(folderName)/latex/**'
-    targetFolder: '$(Build.ArtifactStagingDirectory)/latex'
+    targetFolder: '$(Build.ArtifactStagingDirectory)'
   displayName: 'Copy files 1'
 
 - task: CopyFiles@2
   inputs:
     contents: '$(folderName)/html/**'
-    targetFolder: '$(Build.ArtifactStagingDirectory)/html'
+    targetFolder: '$(Build.ArtifactStagingDirectory)'
   displayName: 'Copy files 2'
 
 - task: CopyFiles@2

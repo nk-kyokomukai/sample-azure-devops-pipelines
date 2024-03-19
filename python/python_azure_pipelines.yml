@@ -50,7 +50,7 @@ jobs:
 
     # 成果物をアップロード用フォルダにコピーする
     - script: |
-        xcopy "dist\(buildExeName)" "$(Build.ArtifactStagingDirectory)"
+        xcopy "dist\$(buildExeName)" "$(Build.ArtifactStagingDirectory)"
       displayName: CopyTargetFolder
 
     # ビルド成果物をアップロードする

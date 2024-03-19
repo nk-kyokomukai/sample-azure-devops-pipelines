@@ -49,9 +49,11 @@ jobs:
       displayName: pyinstaller build
 
     # 成果物をアップロード用フォルダにコピーする
-    - script: |
-        xcopy "dist\$(buildExeName)" "$(Build.ArtifactStagingDirectory)"
-      displayName: CopyTargetFolder
+    - task: CopyFiles@2
+      inputs:
+        contents: 'dist\$(buildExeName)'
+        targetFolder: '$(Build.ArtifactStagingDirectory)'
+      displayName: 'Copy file'
 
     # ビルド成果物をアップロードする
     - task: publishBuildArtifacts@1

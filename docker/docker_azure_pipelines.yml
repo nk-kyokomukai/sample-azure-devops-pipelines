@@ -36,7 +36,7 @@ steps:
     contents: |
       $(folderName)/docker-compose.yml
       $(folderName)/create_container.sh
-    targetFolder: '$(Build.ArtifactStagingDirectory)/$(folderName)'
+    targetFolder: '$(Build.ArtifactStagingDirectory)'
   displayName: 'Copy files'
 
 # ビルド成果物をアップロードする

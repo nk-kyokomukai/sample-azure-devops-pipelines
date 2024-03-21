@@ -1,7 +1,8 @@
 # doxygenのビルドを行う
 
+# 変数定義
 variables:
-  folderName: 'doxygen'
+  folderName: 'doxygen/docs'
   indexFileName: 'doxygen_view.html'
 
 trigger:

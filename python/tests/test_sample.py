@@ -5,7 +5,7 @@ import pytest
 
 
 # インポートさせたいディレクトリパスを取得する
-parent_dirs = [str(pathlib.Path(__file__).parent.parent), os.path.join(str(pathlib.Path(__file__).parent.parent), 'animal')]
+parent_dirs = [str(pathlib.Path(__file__).parent.parent), os.path.join(str(pathlib.Path(__file__).parent.parent), 'src')]
 # sys.pathにインポートさせたいディレクトリを追加する
 sys.path.extend(parent_dirs)
 
@@ -26,7 +26,7 @@ class TestAnimal:
         # ////
 
     def test_get(self, preprocessing):
-        from animal.animal import Animal
+        from src.animal.animal import Animal
 
         sample_animal = Animal(preprocessing['args'])
 

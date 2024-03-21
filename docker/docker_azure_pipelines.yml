@@ -1,11 +1,14 @@
 # docker imageを作成する
 
+# 変数定義
 variables:
   folderName: 'docker'
   outputImageFileName: 'azure_pipelines_sample_image.tar' 
   imageName: 'pipelines-sample-image'
   tag: 'latest'
+  createContainerScriptPath: 'docker/scripts/create_container.sh'
 
+# メインブランチが更新されたときに実行
 trigger:
 - main
 
@@ -35,8 +38,9 @@ steps:
   inputs:
     contents: |
       $(folderName)/docker-compose.yml
-      $(folderName)/create_container.sh
+      $(createContainerScriptPath)
     targetFolder: '$(Build.ArtifactStagingDirectory)'
+    flattenFolders: True
   displayName: 'Copy files'
 
 # ビルド成果物をアップロードする

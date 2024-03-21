@@ -9,11 +9,11 @@ variables:
 trigger:
 - main
 
-# ubuntu os で実行
+# ubuntu OS で実行
 pool:
   vmImage: 'ubuntu-latest'
 
-# 
+# steps内に実行する処理を記述する
 steps:
 
 # crossnoteのインストール
@@ -36,6 +36,7 @@ steps:
   inputs:
     Contents: '$(targetMarkdownFilePath).html'
     TargetFolder: '$(Build.ArtifactStagingDirectory)'
+    flattenFolders: True
   displayName: 'Copy files'
 
 # ビルド成果物をアップロードする

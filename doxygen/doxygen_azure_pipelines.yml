@@ -5,12 +5,15 @@ variables:
   folderName: 'doxygen/docs'
   indexFileName: 'doxygen_view.html'
 
+# mainブランチが更新されたときに起動
 trigger:
 - main
 
+# ubuntu OS で実行
 pool:
   vmImage: 'Ubuntu-latest'
 
+# steps内に実行する処理を記述する
 steps:
 
 # doxygenのインストール
@@ -23,7 +26,7 @@ steps:
     doxygen Doxyfile
   displayName: 'Run doxygen'
 
-# ビルドしたファイルを公開するフォルダにコピー
+# task「CopyFiles@2」を用いて必要ファイルのコピーを行う
 - task: CopyFiles@2
   inputs:
     contents: '$(folderName)/latex/**'
@@ -42,6 +45,6 @@ steps:
     targetFolder: '$(Build.ArtifactStagingDirectory)'
   displayName: 'Copy files 3'
 
-# ビルド成果物をアップロードする
+# task「publishBuildArtifacts@1」を用いてビルド成果物をアップロードする
 - task: PublishBuildArtifacts@1
   displayName: 'Publish artifact'

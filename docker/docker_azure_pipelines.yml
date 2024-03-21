@@ -8,15 +8,18 @@ variables:
   tag: 'latest'
   createContainerScriptPath: 'docker/scripts/create_container.sh'
 
-# メインブランチが更新されたときに実行
+# mainブランチが更新されたときに起動
 trigger:
 - main
 
+# ubuntu OSで実行
 pool:
   vmImage: 'ubuntu-latest'
 
+# steps内に実行する処理を記述する
 steps:
-# docker imageの読み込み
+
+# task「Docker@2」を用いてdocker imageの読み込み
 - task: Docker@2
   displayName: 'Build an image'
   inputs:
@@ -33,16 +36,16 @@ steps:
     gzip $(outputImageFileName)
   displayName: 'Build Docker Image'
 
-# 必要ファイルのコピー
+# task「CopyFiles@2」を用いて必要ファイルのコピーを行う
 - task: CopyFiles@2
   inputs:
     contents: |
       $(folderName)/docker-compose.yml
       $(createContainerScriptPath)
-    targetFolder: '$(Build.ArtifactStagingDirectory)'
+    targetFolder: '$(Build.ArtifactStagingDirectory)/$(folderName)'
     flattenFolders: True
   displayName: 'Copy files'
 
-# ビルド成果物をアップロードする
+# task「publishBuildArtifacts@1」を用いてビルド成果物をアップロードする
 - task: publishBuildArtifacts@1
   displayName: 'Publish artifact'

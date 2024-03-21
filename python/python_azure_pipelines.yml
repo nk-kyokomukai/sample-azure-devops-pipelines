@@ -1,19 +1,25 @@
 # pythonファイルのpytestとpyinstallerビルドを行う
 
+# 変数定義
 variables:
   specFilePath: 'python\pyinstaller.spec'
   buildExeName: 'sample.exe'
 
+# mainブランチが更新されたときに起動
 trigger:
 - main
 
+# jobsを呼び出すことで複数の処理(job)を実行することができる。
 jobs:
 - job: PytestExec
+  # windows OS で実行
   pool:
     vmImage: 'windows-latest'
+
+  # steps内に実行する処理を記述する
   steps:
 
-    # 用いるpythonのバージョンを指定
+    # task「UsePythonVersion@0」を用いてpythonのバージョンを指定
     - task: 'UsePythonVersion@0'
       inputs:
         versionSpec: '3.11'
@@ -32,10 +38,14 @@ jobs:
   # PyTestExecジョブがsucceededで完了したときに実行される
   dependsOn: PyTestExec
   condition: succeeded()
+  # windows OS で実行
   pool:
     vmImage: 'Windows-latest'
+
+  # steps内に実行する処理を記述する
   steps:
 
+    # task「UsePythonVersion@0」を用いてpythonのバージョンを指定
     - task: 'UsePythonVersion@0'
       inputs:
         versionSpec: '3.11'
@@ -48,13 +58,13 @@ jobs:
     - script: pyinstaller $(specFilePath)
       displayName: pyinstaller build
 
-    # 成果物をアップロード用フォルダにコピーする
+    # task「CopyFiles@2」を用いて必要ファイルのコピーを行う
     - task: CopyFiles@2
       inputs:
         contents: 'dist\$(buildExeName)'
         targetFolder: '$(Build.ArtifactStagingDirectory)'
       displayName: 'Copy file'
 
-    # ビルド成果物をアップロードする
+    # task「publishBuildArtifacts@1」を用いてビルド成果物をアップロードする
     - task: publishBuildArtifacts@1
       displayName: 'Publish artifact'

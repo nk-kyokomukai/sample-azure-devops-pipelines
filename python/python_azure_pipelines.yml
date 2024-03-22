@@ -3,7 +3,7 @@
 # 変数定義
 variables:
   specFilePath: 'python\src\pyinstaller.spec'
-  buildExePath: '\dist\sample.exe'
+  buildExePath: 'dist\sample.exe'
 
 # mainブランチが更新されたときに起動
 trigger:
